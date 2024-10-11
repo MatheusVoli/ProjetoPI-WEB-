@@ -33,61 +33,75 @@
         <img src="../Imagens/MeAjudaNovo.jpg" alt="Logo">
     </div>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="../HTML/Home.html">Me Ajude!</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
-                aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarScroll">
-                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                    <!--<li class="nav-item"><a class="nav-link" href="Doacao.html">Doações</a></li>-->
-                    <li class="nav-item"><a class="nav-link" href="../HTML/fiquePorDentro.html">Fique Por Dentro</a></li>
-                    <li class="nav-item"><a class="nav-link" href="campanhas.html">Campanhas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="quemSomos.html">Sobre Nós</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../HTML/entrar.html">Entrar</a></li>
-                </ul>
-                <form class="d-flex me-3">
-                    <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search">
-                    <button class="btn btn-secondary" type="submit">Pesquisar</button>
-                </form>
-                <select id="languageSwitcher" class="form-select mx-2">
-                    <option value="pt">Português</option>
-                    <option value="en">English</option>
-                    <option value="es">Español</option>
-                </select>
-                <div class="d-flex">
-                    <button onclick="diminuirFonte();" class="btn btn-secondary me-2">A-</button>
-                    <button onclick="aumentarFonte();" class="btn btn-secondary">A+</button>
-                </div>
-            </div>
-        </div>
-    </nav>
-</header>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
+              <a class="navbar-brand" href="../HTML/Home.html">Me Ajude!</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                  aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarScroll">
+                  <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                      <!--<li class="nav-item"><a class="nav-link" href="Doacao.html">Doações</a></li>-->
+                      <li class="nav-item"><a class="nav-link" href="../HTML/fiquePorDentro.html">Fique Por Dentro</a></li>
+                      <li class="nav-item"><a class="nav-link" href="campanhas.html">Campanhas</a></li>
+                      <li class="nav-item"><a class="nav-link" href="quemSomos.html">Sobre Nós</a></li>
+                      <li class="nav-item"><a class="nav-link" href="../HTML/entrar.html">Entrar</a></li>
+                  </ul>
+                  <form class="d-flex me-3">
+                      <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search">
+                      <button class="btn btn-secondary" type="submit">Pesquisar</button>
+                  </form>
+                  <select id="languageSwitcher" class="form-select mx-2">
+                      <option value="pt">Português</option>
+                      <option value="en">English</option>
+                      <option value="es">Español</option>
+                  </select>
+                  <div class="d-flex">
+                      <button onclick="diminuirFonte();" class="btn btn-secondary me-2">A-</button>
+                      <button onclick="aumentarFonte();" class="btn btn-secondary">A+</button>
+                  </div>
+              </div>
+          </div>
+      </nav>
   </header>
 
   <main class="container my-5">
     <center>
       <h1>Bem-vindo ao Me Ajude!</h1>
-      <h3>Aqui você pode gerenciar suas ações e doações.</h3>
+      <h3>Encontre e ajude pessoas em situação de vulnerabilidade.</h3>
     </center>
 
-    <form action="../PHP/buscarVulneravel.php" method="POST" class="mt-5">
-      <center><h2>Buscar Vulnerável</h2></center>
-      <div class="form-group">
-        <label for="idVulneravel">Buscar por nome vulnerável</label>
-        <input type="text" class="form-control" id="idVulneravel" name="idVulneravel" placeholder="Digite o nome do vulnerável" required>
-      </div>
-<!--está faltando o select para trazer os nomes em oredem alfabetica-->
-      <!-- Área para mostrar as necessidades do vulnerável -->
-     <div class="form-group mt-5">
-        <label for="necessidades">Resumo do Vulnerável</label>
-        <textarea class="form-control" id="necessidades" name="necessidades" rows="5" placeholder="As necessidades aparecerão aqui..." readonly></textarea>
-      </div><br>
-        <button type="submit" class="btn btn-primary">Buscar</button>
+    <form id="buscarForm" class="mt-5">
+        <center><h2>Localize um Vulnerável</h2></center>
+
+        <!-- Exibição da Foto -->
+        <div class="text-center mt-4">
+            <img id="fotoVulneravel" src="" alt="Foto da pessoa vulnerável" class="img-fluid rounded" style="max-width: 300px;">
+        </div>
+
+        <!-- Input para buscar pelo nome -->
+        <div class="form-group mt-4">
+            <label for="idVulneravel">Digite o nome da pessoa vulnerável</label>
+            <input type="text" class="form-control" id="idVulneravel" name="idVulneravel" placeholder="Nome da pessoa vulnerável">
+        </div>
+
+        <!-- Exibição das necessidades -->
+        <div class="form-group mt-5">
+            <label for="necessidades">Resumo das Necessidades</label>
+            <textarea class="form-control" id="necessidades" name="necessidades" rows="5" placeholder="Aqui serão exibidas as principais necessidades..." readonly></textarea>
+        </div><br>
+
+        <!-- Botões de navegação e ações -->
+        <button type="button" class="btn btn-primary" onclick="buscarVulneravel('nome')">Buscar</button>
         <button type="reset" class="btn btn-secondary">Limpar</button>
-        <button type="button" class="btn btn-secondary" onclick="history.back()">Voltar</button>  
+        <button type="button" class="btn btn-secondary" onclick="history.back()">Voltar</button>
+        
+        <!-- Botões para navegar entre vulneráveis -->
+        <div class="mt-4 text-center">
+            <button type="button" class="btn btn-info" onclick="buscarVulneravel('anterior')">Anterior</button>
+            <button type="button" class="btn btn-info" onclick="buscarVulneravel('proximo')">Próximo</button>
+        </div>
     </form>
   </main>
 
@@ -97,6 +111,7 @@
       <img src="../Imagens/iconeSeta.jpg" alt="Voltar ao topo"> <!-- Substitua pelo caminho da sua imagem -->
     </a>
   </aside>
+
   <!-- Código do Rodapé -->
   <footer class="text-center text-lg-start bg-body-tertiary text-muted">
     
@@ -151,7 +166,7 @@
             <!--<p>
               <a href="#!" class="text-reset">Orders</a>
             </p>
-            <p>
+            <p> 
               <a href="#!" class="text-reset">Help</a>
             </p>-->
           </div>
@@ -190,8 +205,7 @@
       </div>
       <br>
     </section>
-    <!-- Section: Links  -->
-
+    
     <!-- Copyright -->
     <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
       Copyright &copy; 2024 MeAjude!@gmail.com - Todos os Direitos Reservados:
