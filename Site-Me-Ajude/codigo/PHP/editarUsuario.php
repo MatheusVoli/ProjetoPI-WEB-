@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $estado = $_POST['estado'];
     $telefone = $_POST['telefone'];
     $email = $_POST['email'];
-    $senha = $_POST['senha'];s
+    $senha = $_POST['senha'];
     
     // Aqui você pode adicionar a lógica para verificar a senha atual se necessário
 
