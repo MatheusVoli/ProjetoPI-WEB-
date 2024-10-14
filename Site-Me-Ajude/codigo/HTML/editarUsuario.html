@@ -25,6 +25,29 @@
       let novoTamanho = parseFloat(tamanhoAtual) - 2; // Diminui o tamanho em 2px
       corpo.style.fontSize = novoTamanho + 'px';
     }
+    async function buscarEndereco() {
+      const cep = document.getElementById('cep').value.replace('-', '');
+      const url = `https://viacep.com.br/ws/${cep}/json/`;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (data.erro) {
+          alert('CEP não encontrado.');
+          return;
+        }
+
+        // Preencher os campos com os dados do endereço
+        document.getElementById('endereco').value = data.logradouro;
+        document.getElementById('bairro').value = data.bairro;
+        document.getElementById('cidade').value = data.localidade;
+        document.getElementById('estado').value = data.uf;
+
+      } catch (error) {
+        console.error('Erro ao buscar o endereço:', error);
+      }
+    }
   </script>
 </head>
 
@@ -73,29 +96,32 @@
     <center><h2>Editar Usuário</h2></center>
     
     <div class="form-group">
-        <label for="cidade">Cidade</label>
-        <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Cidade" required>
-    </div>
-  
-    <div class="form-group">
-        <label for="bairro">Bairro</label>
-        <input type="text" class="form-control" id="bairro" name="bairro" placeholder="Seu Bairro" required>
-    </div>
+      <label for="cep">CEP</label>
+      <div class="input-group">
+          <input type="text" class="form-control" id="cep" name="cep" placeholder="Digite seu CEP" required>
+          <button type="button" class="btn btn-primary" onclick="buscarEndereco()">Buscar</button>
+      </div>
+  </div>
 
-    <div class="form-group">
-        <label for="endereco">Endereço</label>
-        <input type="text" class="form-control" id="endereco" name="endereco" placeholder="Seu endereço" required>
-    </div>
+  <div class="form-group">
+      <label for="cidade">Cidade</label>
+      <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Cidade" required readonly>
+  </div>
 
-    <div class="form-group">
-        <label for="cep">CEP</label>
-        <input type="text" class="form-control" id="cep" name="cep" placeholder="Digite seu CEP" required>
-    </div>
+  <div class="form-group">
+      <label for="bairro">Bairro</label>
+      <input type="text" class="form-control" id="bairro" name="bairro" placeholder="Seu Bairro" required readonly>
+  </div>
 
-    <div class="form-group">
-        <label for="estado">Estado</label>
-        <input type="text" class="form-control" id="estado" name="estado" placeholder="Seu estado" required>
-    </div>
+  <div class="form-group">
+      <label for="endereco">Endereço</label>
+      <input type="text" class="form-control" id="endereco" name="endereco" placeholder="Seu endereço" required readonly>
+  </div>
+
+  <div class="form-group">
+      <label for="estado">Estado</label>
+      <input type="text" class="form-control" id="estado" name="estado" placeholder="Seu estado" required readonly>
+  </div>
 
     <div class="form-group">
         <label for="telefone">Telefone</label>
@@ -105,7 +131,6 @@
     <div class="form-group">
         <label for="exampleInputEmail1">Endereço de email</label>
         <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="Seu email" required>
-        <small id="emailHelp" class="form-text text-muted">Nunca vamos compartilhar seu email com ninguém.</small>
     </div>
 
     <div class="form-group">
@@ -114,14 +139,19 @@
     </div>
 
     <div class="form-group">
-      <label for="exampleInputPassword1">Confirmar Senha/label>
+      <label for="exampleInputPassword1">Confirmar Senha</label>
       <input type="password" class="form-control" id="exampleInputPassword1" name="senha" placeholder="Senha" required>
   </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Senha Atual</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" name="senha" placeholder="Senha" required>
+</div>
 
    <div class="form-group form-check">
         <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
         <label class="form-check-label" for="exampleCheck1">Clique para confirmar</label>
     </div>
+  
 
     <button type="submit" class="btn btn-primary">Salvar</button>
     <button type="reset" class="btn btn-secondary">Limpar</button>
