@@ -1,50 +1,70 @@
 <?php
-include 'db_connection.php'; // Inclua sua conexão com o banco de dados
+// Inclui o arquivo de conexão com o banco de dados
+include 'db_connection.php';
 
-// Recebendo o CPF do usuário via POST e removendo formatação, se necessário
+// Recebe o CPF do usuário via POST e remove qualquer formatação (como pontos ou traços)
 $cpfUsuario = isset($_POST['cpf']) ? preg_replace('/\D/', '', $_POST['cpf']) : '';
 
-// Buscando o histórico de doações com base no CPF, vinculado ao id_usuario
+// Verifica se o CPF foi fornecido
+if (empty($cpfUsuario)) {
+    // Se o CPF não foi fornecido ou é inválido, retorna uma mensagem de erro
+    echo "<div class='alert alert-danger'>CPF não fornecido ou inválido.</div>";
+    exit(); // Interrompe a execução do script
+}
+
+// Consulta SQL para buscar doações associadas ao CPF
 $queryDoacoes = "
     SELECT d.* 
     FROM doacoes d
     JOIN usuarios u ON d.id_usuario = u.id
-    WHERE u.cpf = :cpf";
+    WHERE u.cpf = :cpf"; // Faz a junção entre a tabela de doações e usuários usando o CPF
 
-$stmtDoacoes = $conn->prepare($queryDoacoes);
-$stmtDoacoes->bindValue(':cpf', $cpfUsuario);
-$stmtDoacoes->execute();
-$doacoes = $stmtDoacoes->fetchAll(PDO::FETCH_ASSOC);
+try {
+    // Prepara a consulta SQL
+    $stmtDoacoes = $conn->prepare($queryDoacoes);
+    // Vincula o CPF à consulta
+    $stmtDoacoes->bindValue(':cpf', $cpfUsuario);
+    // Executa a consulta
+    $stmtDoacoes->execute();
+    // Busca todos os resultados
+    $doacoes = $stmtDoacoes->fetchAll(PDO::FETCH_ASSOC);
 
-// Verificando se o usuário possui doações registradas
-if ($doacoes && count($doacoes) > 0) {
-    echo "<table class='table table-striped'>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Valor</th>
-                    <th>Data da Doação</th>
-                    <th>Descrição</th>
-                </tr>
-            </thead>
-            <tbody>";
+    // Verifica se o usuário possui doações registradas
+    if ($doacoes && count($doacoes) > 0) {
+        // Se houver doações, cria a tabela de doações
+        echo "<table class='table table-striped'>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Valor</th>
+                        <th>Data da Doação</th>
+                        <th>Descrição</th>
+                    </tr>
+                </thead>
+                <tbody>";
 
-    foreach ($doacoes as $doacao) {
-        echo "<tr>
-                <td>{$doacao['id']}</td>
-                <td>{$doacao['valor']}</td>
-                <td>{$doacao['data_doacao']}</td>
-                <td>{$doacao['descricao']}</td>
-              </tr>";
+        // Percorre cada doação e exibe os detalhes
+        foreach ($doacoes as $doacao) {
+            echo "<tr>
+                    <td>{$doacao['id']}</td>
+                    <td>{$doacao['valor']}</td>
+                    <td>{$doacao['data_doacao']}</td>
+                    <td>{$doacao['descricao']}</td>
+                  </tr>";
+        }
+
+        // Fecha a tabela
+        echo "</tbody></table>";
+    } else {
+        // Se não houver doações, exibe uma mensagem informativa
+        echo "<div class='alert alert-warning'>Nenhuma doação encontrada para este CPF.</div>";
     }
 
-    echo "</tbody></table>";
-} else {
-    echo "<script>
-            alert('Nenhuma doação encontrada para este CPF.');
-            window.location.href = 'historicoDoacao.html'; // Permanecer na mesma página
-          </script>";
+} catch (PDOException $e) {
+    // Exibe mensagem de erro caso ocorra uma exceção
+    echo "<div class='alert alert-danger'>Erro ao buscar doações: " . $e->getMessage() . "</div>";
 }
 
-$conn = null; // Fecha a conexão com o banco de dados
+// Fecha a conexão com o banco de dados
+$conn = null;
 ?>

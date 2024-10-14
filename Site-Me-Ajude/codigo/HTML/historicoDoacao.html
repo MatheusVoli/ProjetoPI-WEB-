@@ -1,13 +1,20 @@
 <!DOCTYPE html>
-<html lang="PT-br">
+<html lang="pt-BR">
 
 <head>
+  <!-- Definindo o conjunto de caracteres para o documento -->
   <meta charset="UTF-8">
+  <!-- Configura a viewport para garantir que o layout responda a diferentes tamanhos de tela -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Importa o arquivo de estilo CSS externo -->
   <link rel="stylesheet" type="text/css" href="../CSS/estilo.css">
+  <!-- Define o ícone que será exibido na aba do navegador -->
   <link rel="shortcut icon" type="image/x-icon" href="../Imagens/Slide1.JPG">
+  <!-- Importa a biblioteca Bootstrap para estilos e componentes -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Título da página -->
   <title>ME Ajude!</title>
+  <!-- Estilos personalizados para a página -->
   <style>
     .container {
       margin-top: 30px;
@@ -16,28 +23,32 @@
     table {
       width: 100%;
       margin-top: 20px;
-      border-collapse: collapse;
+      border-collapse: collapse; /* Remove os espaços entre as bordas da tabela */
     }
 
-    table, th, td {
-      border: 1px solid #ddd;
+    table,
+    th,
+    td {
+      border: 1px solid #ddd; /* Define bordas para a tabela e suas células */
     }
 
-    th, td {
+    th,
+    td {
       padding: 15px;
-      text-align: left;
+      text-align: left; /* Alinha o texto à esquerda nas células da tabela */
     }
 
     th {
-      background-color: #f8f9fa;
+      background-color: #f8f9fa; /* Cor de fundo dos cabeçalhos da tabela */
     }
   </style>
 </head>
 
 <body>
+  <!-- Cabeçalho da página -->
   <header>
     <div class="logo-container">
-      <img src="../Imagens/MeAjudaNovo.jpg" alt="Logo">
+      <img src="../Imagens/MeAjudaNovo.jpg" alt="Logo"> <!-- Logotipo do site -->
     </div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
@@ -60,6 +71,7 @@
               <a class="nav-link" href="../HTML/entrar.html">Entrar</a>
             </li>
           </ul>
+          <!-- Formulário para buscar doações pelo CPF -->
           <form class="d-flex me-3" id="formBuscarDoacoes">
             <input class="form-control me-2" type="text" id="cpf" name="cpf" placeholder="Digite seu CPF" required>
             <button class="btn btn-secondary" type="submit">Buscar doações</button>
@@ -69,45 +81,34 @@
     </nav>
   </header>
 
+  <!-- Conteúdo principal da página -->
   <main class="container">
     <h2 class="text-center">Histórico de Doações</h2>
     <p>Abaixo você pode consultar todas as suas doações realizadas:</p>
-
-    <!-- Div onde a tabela de doações será inserida -->
+    
+    <!-- Div para mostrar mensagem de erro se o CPF for inválido -->
+    <div id="mensagemErro"></div>
+    
+    <!-- Div onde a tabela de histórico de doações será inserida dinamicamente -->
     <div id="historicoDoacoes"></div>
-  </main><br>
+  </main>
 
-  <center><button type="button" class="btn btn-secondary" onclick="history.back()">Voltar</button></center>
+  <!-- Botão para voltar à página anterior -->
+  <div class="text-center" style="margin-top: 20px;">
+    <button type="button" class="btn btn-secondary" onclick="history.back()">Voltar</button>
+  </div>
 
+  <!-- Rodapé da página -->
   <footer class="text-center text-lg-start bg-body-tertiary text-muted">
     <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-      Copyright &copy; 2024 MeAjude!@gmail.com - Todos os Direitos Reservados:
-      <a class="text-reset fw-bold" href="https://meAjeit!@gmail.com/">meAjude!@gmail.com</a>
+      Copyright &copy; 2024 MeAjude!<br>
+      Todos os Direitos Reservados:
+      <a class="text-reset fw-bold" href="mailto:meAjude!@gmail.com">meAjude!@gmail.com</a>
     </div>
   </footer>
 
-  <script>
-    // Função AJAX para buscar as doações
-    document.getElementById('formBuscarDoacoes').addEventListener('submit', function (e) {
-      e.preventDefault(); // Evita o redirecionamento padrão
-
-      var cpf = document.getElementById('cpf').value;
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', '../PHP/buscarDoacoes.php', true);
-      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
-      xhr.onload = function () {
-        if (this.status == 200) {
-          document.getElementById('historicoDoacoes').innerHTML = this.responseText;
-        } else {
-          console.error('Erro na requisição AJAX');
-        }
-      };
-
-      xhr.send('cpf=' + encodeURIComponent(cpf));
-    });
-  </script>
-
+  <!-- Incluindo o arquivo JavaScript Doacoes.js -->
+  <script src="../JS/Doacoes.js"></script>
 </body>
 
 </html>
