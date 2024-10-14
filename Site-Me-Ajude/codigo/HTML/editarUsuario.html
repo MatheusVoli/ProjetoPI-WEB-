@@ -8,7 +8,7 @@
   <link rel="shortcut icon" type="image/x-icon" href="../Imagens/Slide1.JPG">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <title>Nossas Campanhas</title>
+  <title>Editar Usuário</title>
 
   <!--Criando botões para aumentar e diminuir o tamanho-->
   <script>
@@ -67,80 +67,65 @@
         </div>
     </nav>
 </header>
+  
+  
 
-
-  <!-- O restante do cabeçalho permanece o mesmo -->
-
-  <center>
-    <h1 data-lang="title">Conheça as nossas campanhas de solidariedade.</h1>
-  </center><br>
-
-  <main class="container">
-    <p data-lang="description">No "Me Ajuda!", acreditamos no poder da solidariedade para transformar vidas. Nossas campanhas são iniciativas que visam mobilizar a comunidade em prol de causas importantes, oferecendo apoio a quem mais precisa. Aqui, você encontrará informações sobre nossas ações, como pode participar e contribuir, e histórias inspiradoras de quem já foi impactado. 
-      Junte-se a nós nessa missão de fazer a diferença e espalhar esperança!</p>
-    <br>
-    <div class="row align-items-center mb-5">
-      <div class="col-md-6">
-        <img src="../Imagens/colocaboracao.jpg" class="img-fluid" alt="Imagem 1">
-      </div>
-      <div class="col-md-6">
-        <h2>Campanha 'Dando as Mãos</h2>
-        <p>"A campanha <strong>"Dando as Mãos"</strong>é um convite à união e à solidariedade, promovendo ações que fortalecem a comunidade e ajudam aqueles que estão passando por dificuldades. Nossa missão é conectar pessoas dispostas a ajudar com aquelas que necessitam de apoio, seja emocional, físico ou material.
-          Nesta campanha, organizamos eventos de arrecadação de alimentos, roupas e produtos de higiene pessoal, além de oferecer apoio psicológico e oficinas de capacitação. Os voluntários são a alma dessa iniciativa, e qualquer pessoa pode se envolver, seja doando, participando das atividades ou compartilhando informações sobre a campanha.
-          Além disso, realizamos visitas a lares de idosos e instituições que abrigam pessoas em situação de vulnerabilidade, proporcionando momentos de alegria e companheirismo. Acreditamos que cada gesto conta e que, juntos, podemos fazer a diferença na vida de muitos.
-          Participe da campanha <strong>"Dando as Mãos"</strong> e ajude-nos a espalhar solidariedade e esperança. Com sua ajuda, podemos alcançar mais corações e transformar realidades!"</p>
-      </div>
+<aside>
+  <form action="../PHP/processarCadastro.php" method="POST"> 
+    <center><h2>Editar Usuário</h2></center>
+    
+    <div class="form-group">
+        <label for="cidade">Cidade</label>
+        <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Cidade" required>
     </div>
 
-    <div class="row align-items-center mb-5">
-      <div class="col-md-6 order-md-2">
-        <img src="../Imagens/imgDoação3.jpg" class="img-fluid" alt="Imagem 2">
-      </div>
-      <div class="col-md-6 order-md-1">
-        <h2>Doações: Um Ato de Esperança</h2>
-        <p><strong>"As doações para o "Me Ajude!"</strong> vão além de um simples gesto de generosidade; elas representam uma verdadeira ponte de esperança para aqueles que enfrentam dificuldades em nossa comunidade. Cada contribuição, por menor que seja, tem o poder de fazer a diferença e transformar vidas.
-          Com sua doação, conseguimos oferecer suporte essencial em diversas áreas, como alimentação, saúde, educação e assistência emocional. Cada recurso é cuidadosamente direcionado para atender às necessidades mais urgentes, permitindo que possamos impactar positivamente a vida de muitas pessoas.
-          Acreditamos que, juntos, podemos criar um futuro mais solidário e justo. Ao contribuir, <strong>você se torna parte de uma rede de apoio que busca promover dignidade e oportunidades para todos</strong> . Sua generosidade não apenas proporciona alívio imediato, mas também planta sementes de esperança e transformação.
-          Junte-se a nós nessa missão de amor e solidariedade. Com sua ajuda, podemos alcançar mais corações e iluminar caminhos que antes pareciam escuros."</p>
-      </div>
+    <div class="form-group">
+        <label for="bairro">Bairro</label>
+        <input type="text" class="form-control" id="bairro" name="bairro" placeholder="Seu Bairro" required>
     </div>
 
-    <div class="row align-items-center mb-5">
-      <div class="col-md-6">
-        <img src="../Imagens/imgGeladeira.jpg" class="img-fluid" alt="Imagem 3">
-      </div>
-      <div class="col-md-6">
-        <h2>Com o Me Ajude! Sua Solidariedade é Certeira!</h2>
-        <p>"Com o "Me Ajude!", <strong>solidariedade é certeira e faz toda a diferença</strong>. Cada alimento que você doa é mais do que uma simples contribuição; é uma fonte de calor e esperança para aqueles que enfrentam dificuldades.<strong> Até o frio vai embora quando há alimentos na geladeira!</strong>
-          Acreditamos que a união de esforços pode aquecer corações e transformar realidades. Sua generosidade não só garante refeições nutritivas, mas também traz conforto e dignidade para quem mais precisa. Juntos, estamos criando um impacto positivo e significativo na vida de muitas pessoas.
-          Ao apoiar o "Me Ajude!", você se torna parte de uma corrente de amor e solidariedade, onde cada ato de bondade conta. Venha conosco nessa jornada de transformação e faça sua parte para que a esperança nunca falte."</p>
-      </div>
+    <div class="form-group">
+        <label for="endereco">Endereço</label>
+        <input type="text" class="form-control" id="endereco" name="endereco" placeholder="Seu endereço" required>
     </div>
-  </main>
 
-  <main class="container text-center">
-    <center>
-      <h1>Ajudar quem precisa nunca foi tão fácil!</h1>
-    </center>
-    <br><br>
-    <p>Com nosso site, você pode fazer a diferença de forma rápida e prática, sem sair de casa e usando apenas seu celular. Veja como é simples participar:</p>
-    <br>
-    <p>
-      1. Cadastre-se no MeAjude!: Para isso, acesse nosso site e registre-se para se tornar um doador. Com isso, você se junta à nossa rede de apoio e começa a contribuir de maneira cooperativa, ajudando milhares de pessoas em estado de vulnerabilidade ao redor do mundo.
-    </p>
-    <br>
-    <p>
-      2. Escolha como ajudar:
-      <br>
-      . <strong>Doações em Dinheiro</strong>: Se você prefere doar dinheiro, nossa página torna o processo fácil e rápido. Com apenas alguns cliques, você pode fazer uma contribuição que será direcionada às necessidades mais urgentes.
-      <br>
-      . <strong>Doações de Bens Móveis</strong>: Caso queira doar móveis para o lar de pessoas em estado de vulnerabilidade, temos uma página específica para isso. Você pode informar quais bens deseja doar e nós cuidamos do envio para quem realmente precisa.
-    </p>
-    <br>
-    <p>
-      3. Cadastro de vulneráveis: A pessoa em estado de vulnerabilidade pode se cadastrar diretamente no nosso site. Para isso, realize seu cadastro, garantindo que a ajuda chegue de forma eficiente a quem precisa.
-    </p>
-  </main>
+    <div class="form-group">
+        <label for="cep">CEP</label>
+        <input type="text" class="form-control" id="cep" name="cep" placeholder="Digite seu CEP" required>
+    </div>
+
+    <div class="form-group">
+        <label for="estado">Estado</label>
+        <input type="text" class="form-control" id="estado" name="estado" placeholder="Seu estado" required>
+    </div>
+
+    <div class="form-group">
+        <label for="telefone">Telefone</label>
+        <input type="text" class="form-control" id="telefone" name="telefone" placeholder="Seu Telefone" required>
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputEmail1">Endereço de email</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="Seu email" required>
+        <small id="emailHelp" class="form-text text-muted">Nunca vamos compartilhar seu email com ninguém.</small>
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputPassword1">Trocar Senha</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" name="senha" placeholder="Senha" required>
+    </div>
+
+    <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
+        <label class="form-check-label" for="exampleCheck1">Clique para confirmar</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <button type="reset" class="btn btn-secondary">Limpar</button>
+    <button type="button" class="btn btn-secondary" onclick="history.back()">Voltar</button>  
+  </form>
+</aside>
+
   <br><br><br>
 
   <center><button type="button" class="btn btn-secondary" onclick="history.back()">Voltar</button> </center>
