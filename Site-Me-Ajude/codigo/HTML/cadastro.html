@@ -24,29 +24,33 @@
       corpo.style.fontSize = novoTamanho + 'px';
     }
 
-    async function buscarEndereco() {
-      const cep = document.getElementById('cep').value.replace('-', '');
-      const url = `https://viacep.com.br/ws/${cep}/json/`;
+    function buscarCEP() {
+    const cep = document.getElementById('cep').value.replace(/\D/g, '');
 
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
+    if (cep.length === 8) {
+        const url = `https://viacep.com.br/ws/${cep}/json/`;
 
-        if (data.erro) {
-          alert('CEP não encontrado.');
-          return;
-        }
-
-        // Preencher os campos com os dados do endereço
-        document.getElementById('endereco').value = data.logradouro;
-        document.getElementById('bairro').value = data.bairro;
-        document.getElementById('cidade').value = data.localidade;
-        document.getElementById('estado').value = data.uf;
-
-      } catch (error) {
-        console.error('Erro ao buscar o endereço:', error);
-      }
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (!data.erro) {
+                    document.getElementById('cidade').value = data.localidade;
+                    document.getElementById('bairro').value = data.bairro;
+                    document.getElementById('endereco').value = data.logradouro;
+                    document.getElementById('estado').value = data.uf;
+                } else {
+                    alert('CEP não encontrado.');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao buscar CEP:', error);
+                alert('Erro ao buscar CEP. Tente novamente.');
+            });
+    } else {
+        alert('CEP inválido. Por favor, digite um CEP válido.');
     }
+}
+
   </script>
   <script src="../JS/Cadastro.js" defer></script> <!-- Link para o JavaScript -->
 </head>
@@ -113,7 +117,7 @@
           <label for="cep">CEP</label>
           <div class="input-group">
               <input type="text" class="form-control" id="cep" name="cep" placeholder="Digite seu CEP" required>
-              <button type="button" class="btn btn-primary" onclick="buscarEndereco()">Buscar</button>
+              <button type="button" class="btn btn-primary" onclick="buscarCEP()">Buscar</button>
           </div>
       </div>
   
