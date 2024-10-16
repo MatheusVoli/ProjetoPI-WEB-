@@ -6,12 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="../CSS/estilo.css">
   <link rel="shortcut icon" type="image/x-icon" href="../Imagens/Slide1.JPG">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <title>Editar Usuário</title>
 
-  <!--Criando botões para aumentar e diminuir o tamanho-->
   <script>
+    // Função para aumentar o tamanho da fonte
     function aumentarFonte() {
       let corpo = document.querySelector('body');
       let tamanhoAtual = window.getComputedStyle(corpo).fontSize;
@@ -19,120 +18,310 @@
       corpo.style.fontSize = novoTamanho + 'px';
     }
 
+    // Função para diminuir o tamanho da fonte
     function diminuirFonte() {
       let corpo = document.querySelector('body');
       let tamanhoAtual = window.getComputedStyle(corpo).fontSize;
       let novoTamanho = parseFloat(tamanhoAtual) - 2; // Diminui o tamanho em 2px
       corpo.style.fontSize = novoTamanho + 'px';
     }
+
+    // Função para buscar cadastro pelo CPF
+    async function buscarCadastroCPF() {
+      const cpf = document.getElementById('cpf').value; // Obtém o CPF do campo
+      const url = `../PHP/editarUsuario.php?cpf=${cpf}`; // URL da requisição PHP
+
+      try {
+        const response = await fetch(url); // Faz a requisição
+        const data = await response.json(); // Converte a resposta em JSON
+
+        console.log(data); // Log para verificar a resposta
+
+        if (data.erro) {
+          alert(data.erro); // Exibe mensagem de erro
+          document.getElementById('nomeUsuarioContainer').style.display = 'none'; // Oculta o campo nome do usuário em caso de erro
+          return;
+        }
+
+        // Preenche os campos com os dados do cadastro
+        document.getElementById('telefone').value = data.telefone;
+        document.getElementById('exampleInputEmail1').value = data.email;
+        document.getElementById('cidade').value = data.cidade;
+        document.getElementById('bairro').value = data.bairro;
+        document.getElementById('endereco').value = data.endereco;
+        document.getElementById('cep').value = data.cep;
+        document.getElementById('estado').value = data.estado;
+
+        // Preenche e exibe o nome do usuário
+        document.getElementById('nomeUsuario').value = data.nome; // Preenche o campo nome
+        document.getElementById('nomeUsuarioContainer').style.display = 'block'; // Exibe o campo nome do usuário
+
+      } catch (error) {
+        console.error('Erro ao buscar o cadastro:', error); // Log de erro
+      }
+    }
+
+    // Função para buscar endereço pelo CEP
+    async function buscarEndereco() {
+      const cep = document.getElementById('cep').value.replace('-', ''); // Remove traços do CEP
+      const url = `https://viacep.com.br/ws/${cep}/json/`; // URL da API de CEP
+
+      try {
+        const response = await fetch(url); // Faz a requisição
+        const data = await response.json(); // Converte a resposta em JSON
+
+        if (data.erro) {
+          alert('CEP não encontrado.'); // Mensagem de erro se o CEP não for encontrado
+          return;
+        }
+
+        // Preenche os campos com os dados do endereço
+        document.getElementById('endereco').value = data.logradouro;
+        document.getElementById('bairro').value = data.bairro;
+        document.getElementById('cidade').value = data.localidade;
+        document.getElementById('estado').value = data.uf;
+
+      } catch (error) {
+        console.error('Erro ao buscar o endereço:', error); // Log de erro
+      }
+    }
+
+    // Função para limpar os campos
+    function limparCampos() {
+      document.getElementById('nomeUsuarioContainer').style.display = 'none'; // Oculta o campo nome do usuário
+      document.getElementById('cpf').value = '';
+      document.getElementById('telefone').value = '';
+      document.getElementById('exampleInputEmail1').value = '';
+      document.getElementById('cidade').value = '';
+      document.getElementById('bairro').value = '';
+      document.getElementById('endereco').value = '';
+      document.getElementById('cep').value = '';
+      document.getElementById('estado').value = '';
+      document.getElementById('nomeUsuario').value = '';
+      document.getElementById('exampleInputPassword1').value = '';
+      document.getElementById('exampleInputPassword2').value = '';
+      document.getElementById('exampleInputPassword3').value = '';
+    }
+
+    // Função para voltar à página anterior
+    function voltar() {
+      window.history.back(); // Volta para a página anterior
+    }
+
+// Função para excluir conta
+async function excluirConta() {
+    const cpfInput = document.getElementById("cpf").value; // Pega o valor do CPF
+    const senhaAtual = prompt('Digite sua senha atual para confirmar a exclusão da conta:'); // Solicita a senha atual
+
+    if (senhaAtual === null) {
+        return; // Se o usuário cancelar o prompt, a função é encerrada
+    }
+
+    const confirmar = confirm('Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.'); // Confirmação
+
+    if (confirmar) {
+        // Valida o CPF
+        if (cpfInput.length !== 11 || isNaN(cpfInput)) {
+            alert('CPF deve conter exatamente 11 dígitos numéricos.'); // Mensagem de erro se CPF não for válido
+            return; // Sai da função se o CPF não for válido
+        }
+
+        try {
+            // Envia CPF e senha para verificação antes da exclusão
+            const response = await fetch('../PHP/editarUsuario.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    cpf: cpfInput, // Enviando o CPF para exclusão
+                    senha: senhaAtual, // Enviando a senha para verificação
+                    excluirConta: true // Identificando a requisição
+                })
+            });
+
+            const result = await response.json(); // Espera a resposta como JSON
+
+            // Verifica o resultado da exclusão
+            if (result.sucesso) {
+                alert('Conta excluída com sucesso!'); // Sucesso na exclusão
+                window.location.href = '../HTML/entrar.html'; // Redireciona após a exclusão
+            } else {
+                alert(result.erro || 'Erro ao excluir a conta.'); // Mostra erro se existir
+            }
+        } catch (error) {
+            console.error('Erro ao excluir conta:', error); // Log de erro
+            alert('Erro ao tentar excluir a conta.');
+        }
+    }
+}
+// Função para editar usuário
+async function editarUsuario() {
+    const cpfInput = document.getElementById("cpf").value.trim(); // Pega o valor do CPF e remove espaços
+    const senhaAtual = prompt('Digite sua senha atual para confirmar a edição:'); // Solicita a senha atual
+
+    if (senhaAtual === null) {
+        return; // Se o usuário cancelar o prompt, a função é encerrada
+    }
+
+    const nome = document.getElementById("nomeUsuario").value.trim(); // Pega o nome do usuário
+    const telefone = document.getElementById("telefone").value.trim(); // Pega o telefone do usuário
+    const email = document.getElementById("exampleInputEmail1").value.trim(); // Pega o email do usuário
+    const endereco = document.getElementById("endereco").value.trim(); // Pega o endereço
+    const bairro = document.getElementById("bairro").value.trim(); // Pega o bairro
+    const cidade = document.getElementById("cidade").value.trim(); // Pega a cidade
+    const estado = document.getElementById("estado").value.trim(); // Pega o estado
+    const cep = document.getElementById("cep").value.trim(); // Pega o CEP
+
+    const confirmar = confirm('Tem certeza que deseja salvar as alterações?'); // Confirmação
+
+    if (confirmar) {
+        // Valida o CPF
+        if (cpfInput.length !== 11 || isNaN(cpfInput)) {
+            alert('CPF deve conter exatamente 11 dígitos numéricos.'); // Mensagem de erro se CPF não for válido
+            return; // Sai da função se o CPF não for válido
+        }
+
+        try {
+            // Envia os dados para atualização
+            const response = await fetch('../PHP/editarUsuario.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    cpf: cpfInput, // Enviando o CPF para edição
+                    senha: senhaAtual, // Enviando a senha para verificação
+                    nome: nome, // Enviando o nome do usuário
+                    telefone: telefone, // Enviando o telefone do usuário
+                    email: email, // Enviando o email do usuário
+                    endereco: endereco, // Enviando o endereço do usuário
+                    bairro: bairro, // Enviando o bairro do usuário
+                    cidade: cidade, // Enviando a cidade do usuário
+                    estado: estado, // Enviando o estado do usuário
+                    cep: cep, // Enviando o CEP do usuário
+                    editarUsuario: true // Identificando a requisição
+                })
+            });
+
+            const result = await response.json(); // Espera a resposta como JSON
+
+            // Verifica o resultado da edição
+            if (result.sucesso) {
+                alert('Informações atualizadas com sucesso!'); // Sucesso na atualização
+                window.location.href = '../HTML/inicioSessao.html'; // Redireciona para a página de perfil ou outra desejada
+            } else {
+                alert(result.erro || 'Erro ao atualizar as informações.'); // Mostra erro se existir
+            }
+        } catch (error) {
+            console.error('Erro ao editar usuário:', error); // Log de erro
+            alert('Erro ao tentar atualizar as informações.');
+        }
+    }
+}
+
+// Adicione um evento de clique ao botão "Salvar"
+document.getElementById('botaoEditar').addEventListener('click', editarUsuario);
+
+
+// Adicione um evento de clique ao botão "Salvar"
+document.getElementById('botaoSalvar').addEventListener('click', salvarUsuario);
+
+
+
   </script>
 </head>
 
 <body>
   <header>
-    <span id="topo"></span>
     <div class="logo-container">
-        <img src="../Imagens/MeAjudaNovo.jpg" alt="Logo">
+      <img src="../Imagens/MeAjudaNovo.jpg" alt="Logo">
     </div>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="../HTML/Home.html">Me Ajude!</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
-                aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarScroll">
-                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                    <!--<li class="nav-item"><a class="nav-link" href="Doacao.html">Doações</a></li>-->
-                    <li class="nav-item"><a class="nav-link" href="../HTML/fiquePorDentro.html">Fique Por Dentro</a></li>
-                    <li class="nav-item"><a class="nav-link" href="campanhas.html">Campanhas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../HTML/sobreNos.html">Sobre Nós</a></li>
-                   <!--<li class="nav-item"><a class="nav-link" href="../HTML/entrar.html">Entrar</a></li>-->
-                </ul>
-                <form class="d-flex me-3">
-                    <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search">
-                    <button class="btn btn-secondary" type="submit">Pesquisar</button>
-                </form>
-                <select id="languageSwitcher" class="form-select mx-2">
-                    <option value="pt">Português</option>
-                    <option value="en">English</option>
-                    <option value="es">Español</option>
-                </select>
-                <div class="d-flex">
-                    <button onclick="diminuirFonte();" class="btn btn-secondary me-2">A-</button>
-                    <button onclick="aumentarFonte();" class="btn btn-secondary">A+</button>
-                </div>
-            </div>
+      <div class="container-fluid">
+        <a class="navbar-brand" href="../HTML/Home.html">Me Ajude!</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarScroll">
+          <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+            <li class="nav-item"><a class="nav-link" href="../HTML/fiquePorDentro.html">Fique Por Dentro</a></li>
+            <li class="nav-item"><a class="nav-link" href="campanhas.html">Campanhas</a></li>
+            <li class="nav-item"><a class="nav-link" href="../HTML/sobreNos.html">Sobre Nós</a></li>
+          </ul>
+          <form class="d-flex me-3">
+            <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search">
+            <button class="btn btn-secondary" type="submit">Pesquisar</button>
+          </form>
+          <div class="d-flex">
+            <button onclick="diminuirFonte();" class="btn btn-secondary me-2">A-</button>
+            <button onclick="aumentarFonte();" class="btn btn-secondary">A+</button>
+          </div>
         </div>
+      </div>
     </nav>
-</header><br>
+  </header>
   
-<aside>
-  <form action="../PHP/processarCadastro.php" method="POST"> 
-    <center><h2>Editar Usuário</h2></center>
-    
-    <div class="form-group">
-        <label for="cidade">Cidade</label>
-        <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Cidade" required>
-    </div>
-  
-    <div class="form-group">
-        <label for="bairro">Bairro</label>
-        <input type="text" class="form-control" id="bairro" name="bairro" placeholder="Seu Bairro" required>
-    </div>
+  <aside>
+      <form action="../PHP/processarCadastro.php" method="POST"> 
+        <center><h2>Editar Usuário</h2></center>
+        
+        <div class="form-group">
+          <label for="cep">CEP</label>
+          <div class="input-group">
+              <input type="text" class="form-control" id="cep" name="cep" placeholder="Digite seu CEP" required>
+              <button type="button" class="btn btn-primary" onclick="buscarCEP()">Buscar</button>
+          </div>
+      </div>
 
-    <div class="form-group">
-        <label for="endereco">Endereço</label>
-        <input type="text" class="form-control" id="endereco" name="endereco" placeholder="Seu endereço" required>
-    </div>
+      <div class="form-group">
+          <label for="cidade">Cidade</label>
+          <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Cidade" required readonly>
+      </div>
 
-    <div class="form-group">
-        <label for="cep">CEP</label>
-        <input type="text" class="form-control" id="cep" name="cep" placeholder="Digite seu CEP" required>
-    </div>
+      <div class="form-group">
+          <label for="bairro">Bairro</label>
+          <input type="text" class="form-control" id="bairro" name="bairro" placeholder="Seu Bairro" required readonly>
+      </div>
 
-    <div class="form-group">
-        <label for="estado">Estado</label>
-        <input type="text" class="form-control" id="estado" name="estado" placeholder="Seu estado" required>
-    </div>
+      <div class="form-group">
+          <label for="endereco">Endereço</label>
+          <input type="text" class="form-control" id="endereco" name="endereco" placeholder="Seu endereço" required readonly>
+      </div>
 
-    <div class="form-group">
-        <label for="telefone">Telefone</label>
-        <input type="text" class="form-control" id="telefone" name="telefone" placeholder="Seu Telefone" required>
-    </div>
+          <div class="form-group">
+            <label for="telefone">Telefone</label>
+            <input type="text" class="form-control" id="telefone" name="telefone" placeholder="Seu Telefone" required>
+        </div>
 
-    <div class="form-group">
-        <label for="exampleInputEmail1">Endereço de email</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="Seu email" required>
-        <small id="emailHelp" class="form-text text-muted">Nunca vamos compartilhar seu email com ninguém.</small>
-    </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Endereço de email</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="Seu email" required>
+            <small id="emailHelp" class="form-text text-muted">Nunca vamos compartilhar seu email com ninguém.</small>
+        </div>
 
-    <div class="form-group">
-        <label for="exampleInputPassword1">Trocar Senha</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" name="senha" placeholder="Senha" required>
-    </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Trocar Senha</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" name="senha" placeholder="Senha" required>
+        </div>
 
-    <div class="form-group">
-      <label for="exampleInputPassword1">Confirmar Senha</label>
-      <input type="password" class="form-control" id="exampleInputPassword1" name="senha" placeholder="Senha" required>
-  </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Confirmar Senha</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" name="senha" placeholder="Senha" required>
+      </div>
 
-   <div class="form-group form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
-        <label class="form-check-label" for="exampleCheck1">Clique para confirmar</label>
-    </div><br>
+      <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
+            <label class="form-check-label" for="exampleCheck1">Clique para confirmar</label>
+        </div>
 
-    <button type="submit" class="btn btn-primary">Salvar</button>
-    <button type="reset" class="btn btn-secondary">Limpar</button>
-    <button type="button" class="btn btn-secondary" onclick="history.back()">Voltar</button>
-  </form>
-</aside>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <button type="reset" class="btn btn-secondary">Limpar</button>
+        <button type="button" class="btn btn-secondary" onclick="history.back()">Voltar</button>  
+      </form>
+  </aside>
 
-  <br><br><br>
-
-  <!--<center><button type="button" class="btn btn-secondary" onclick="history.back()">Voltar</button> </center>-->
-  
   <!-- O cóidigo do botão para voltar para o topo-->
   <aside>
     <a href="#topo" class="back-to-top">
@@ -147,9 +336,9 @@
   </div>
   <br>
   <footer class="text-center text-lg-start bg-body-tertiary text-muted">
-    <!-- Section: Social media -->
+    
     <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"></section>
-      
+    
     <!-- Section: Links  -->
     <section class="">
       <div class="container text-center text-md-start mt-5">
@@ -165,7 +354,7 @@
               "Juntos, podemos transformar vidas e construir um futuro melhor. Participe e faça a diferença hoje!"
             </p>
           </div>
-          <!-- Grid column -->
+                   <!-- Grid column -->
           <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
             <!-- Links -->
             <h6 class="text-uppercase fw-bold mb-4">
@@ -184,7 +373,7 @@
               <a href="fiquePorDentro.html" class="text-reset">Fique por Dentro</a>
             </p>
           </div>
-          <!-- Grid column -->
+          
           <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
             <!-- Links -->
             <h6 class="text-uppercase fw-bold mb-4">
@@ -194,7 +383,7 @@
               <a href="../HTML/Doacao.html" class="text-reset">Como doar</a>
             </p>
             <p>
-              <a href="#!" class="text-reset">Nosso Local</a>
+              <a href="../HTML/nossaLocalização.html" class="text-reset">Nosso Local</a>
             </p>
             <!--<p>
               <a href="#!" class="text-reset">Orders</a>
@@ -203,16 +392,14 @@
               <a href="#!" class="text-reset">Help</a>
             </p>-->
           </div>
-          
-          <!-- Grid column -->
-          <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-            <!-- Links -->
-            <h6 class="text-uppercase fw-bold mb-4">Contatos</h6>
-            <p class="fas fa-home me-3">Av. Venancio Aires, 93 - Cidade Baixa, RS, 90040-191</p>
-            <p class="fas fa-envelope me-3">meAjude!@gmail.com</p>
-            <p class="fas fa-phone me-3">(51) 99999-9999</p>
-            <p class="fas fa-print me-3">(51) 99999-9999</p>
-          </div>
+              <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                <!-- Links -->
+                <h6 class="text-uppercase fw-bold mb-4">Contatos</h6>
+                <p class="fas fa-home me-3">Av. Venancio Aires, 93 - Cidade Baixa, RS, 90040-191</p>
+                <p class="fas fa-envelope me-3">meAjude!@gmail.com</p>
+                <p class="fas fa-phone me-3">(51) 99999-9999</p>
+                <p class="fas fa-print me-3">(51) 99999-9999</p>
+              </div>
         </div>
         <!-- Grid row -->
       </div>
@@ -243,7 +430,7 @@
     <!-- Copyright -->
     <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
       Copyright &copy; 2024 meAjude!@gmail.com - Todos os Direitos Reservados:
-      <a class="text-reset fw-bold" href="https://meAjeit!@gmail.com/">meAjeude!@gmail.com</a>
+      <a class="text-reset fw-bold" href="https://meAjeit!@gmail.com/">meAjude!@gmail.com</a>
     </div>
     <!-- Copyright -->
   </footer>
@@ -279,5 +466,4 @@
   <script src=”https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js”></script>
   <script src="script.js"></script>
 </body>
-
 </html>
