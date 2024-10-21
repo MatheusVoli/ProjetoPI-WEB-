@@ -166,9 +166,9 @@
       <img src="../Imagens/iconeSeta.jpg" alt="Voltar ao topo"> <!-- Substitua pelo caminho da sua imagem -->
     </a>
   </aside>
+
   <!-- Código do Rodapé -->
   <footer class="text-center text-lg-start bg-body-tertiary text-muted">
-    
     <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"></section>
     
     <!-- Section: Links  -->
@@ -212,10 +212,10 @@
               Doações / Nossa localização
             </h6>
             <p>
-              <a href="../HTML/Doacao.html" class="text-reset">Como doar</a>
+              <a href="../HTML/comoDoar.html" class="text-reset">Como doar</a>
             </p>
             <p>
-              <a href="#!" class="text-reset">Nosso Local</a>
+              <a href="../HTML/nossaLocalização.html" class="text-reset">Nosso Local</a>
             </p>
             <!--<p>
               <a href="#!" class="text-reset">Orders</a>
@@ -266,37 +266,22 @@
     </div>
     <!-- Copyright -->
   </footer>
+  
   <!-- Footer -->
-  <div vw class="enabled">
-    <div vw-access-button class="active"></div>
-    <div vw-plugin-wrapper>
-      <div class="vw-plugin-top-wrapper"></div>
+    <div vw class="enabled">
+      <div vw-access-button class="active"></div>
+      <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+      </div>
+
+      <!--JS do Vlibras-->
+      <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+      <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+      </script>
     </div>
+    <script src=”https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js”></script>
+    <script src="script.js"></script>
 
-    <!--JS do Vlibras-->
-    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-    <script>
-      new window.VLibras.Widget('https://vlibras.gov.br/app');
-    </script>
-  </div>
-  <script src=”https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js”></script>
-  <script src="script.js"></script>
-  </footer>
-  <!-- Footer -->
-  <div vw class="enabled">
-    <div vw-access-button class="active"></div>
-    <div vw-plugin-wrapper>
-      <div class="vw-plugin-top-wrapper"></div>
-    </div>
-
-    <!--JS do Vlibras-->
-    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-    <script>
-      new window.VLibras.Widget('https://vlibras.gov.br/app');
-    </script>
-  </div>
-  <script src=”https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js”></script>
-  <script src="script.js"></script>
-</body>
-
+  </body>
 </html>
