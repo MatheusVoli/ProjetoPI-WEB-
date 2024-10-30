@@ -10,7 +10,7 @@
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastrar Vulnerável</title>
-  <!--<span title="Espanhol"><a lang="PT-br" href="qa-html-language-declarations.es">Español</a></span>-->
+  
   <!--Criando botões para aumentar e diminuir o tamanho-->
   <script>
     function aumentarFonte() {
@@ -38,8 +38,12 @@
       };
       reader.readAsDataURL(event.target.files[0]);
     }
-    </script>
 
+    function parabens() {
+            alert("Cadastro realizado com sucesso!");
+            window.location.href = "../Site-Me-Ajude/codigo/HTML/home.html"; // Redireciona para a página home.html
+        }
+    </script>
 </head>
 
 <body>
@@ -80,13 +84,11 @@
             </div>
         </div>
     </nav>
-</header>
   </header>
 
   <aside>
-    
-    <form action="../PHP/processarCadastro.php" method="POST"> 
-        <center><h2>Cadastrar Vulnerável</h2></center>
+    <form action="../PHP/cadastroVulneravel.php" method="POST"> 
+      <center><h2>Cadastrar Vulnerável</h2></center>
 
         <!-- Campo para upload de foto -->
           <div class="form-group">
@@ -151,15 +153,13 @@
         <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
             <label class="form-check-label" for="exampleCheck1">Clique para confirmar</label>
-        </div>
+        </div><br>
 
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary" onclick="parabens()">Salvar</button>
         <button type="reset" class="btn btn-secondary">Limpar</button>
         <button type="button" class="btn btn-secondary" onclick="history.back()">Voltar</button>  
     </form>
-</aside>
-<br>
-
+</aside><br>
 
   <aside>
     <a href="#topo" class="back-to-top">
@@ -215,14 +215,9 @@
               <a href="../HTML/comoDoar.html" class="text-reset">Como doar</a>
             </p>
             <p>
-              <a href="../HTML/nossaLocalização.html" class="text-reset">Nosso Local</a>
+              <a href="../HTML/nossaLocalizacao.html" class="text-reset">Nosso Local</a>
             </p>
-            <!--<p>
-              <a href="#!" class="text-reset">Orders</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">Help</a>
-            </p>-->
+            
           </div>
               <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                 <!-- Links -->

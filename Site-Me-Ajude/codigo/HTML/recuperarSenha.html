@@ -1,107 +1,117 @@
-<!DOCTYPE html>
 <html lang="pt-BR">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="../CSS/estilo.css">
-        <link rel="shortcut icon" type="image/x-icon" href="../Imagens/Slide1.JPG">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Recuperar Senha</title>
-        <!--<span title="Espanhol"><a lang="PT-br" href="qa-html-language-declarations.es">Español</a></span>-->
-        <!--Criando botões para aumentar e diminuir o tamanho-->
-        <script>
-          function aumentarFonte() {
-            let corpo = document.querySelector('body');
-            let tamanhoAtual = window.getComputedStyle(corpo).fontSize;
-            let novoTamanho = parseFloat(tamanhoAtual) + 2; // Aumenta o tamanho em 2px
-            corpo.style.fontSize = novoTamanho + 'px';
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../CSS/estilo.css">
+    <link rel="shortcut icon" type="image/x-icon" href="../Imagens/Slide1.JPG">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Recuperar Senha</title>
+    <script>
+      function aumentarFonte() {
+        let corpo = document.querySelector('body');
+        let tamanhoAtual = window.getComputedStyle(corpo).fontSize;
+        let novoTamanho = parseFloat(tamanhoAtual) + 2; 
+        corpo.style.fontSize = novoTamanho + 'px';
+      }
+
+      function diminuirFonte() {
+        let corpo = document.querySelector('body');
+        let tamanhoAtual = window.getComputedStyle(corpo).fontSize;
+        let novoTamanho = parseFloat(tamanhoAtual) - 2; 
+        corpo.style.fontSize = novoTamanho + 'px';
+      }
+    
+      function email(){
+      document.getElementById('recoveryForm').addEventListener('submit', function(event) {
+          event.preventDefault();
+          const emailOrPhone = document.getElementById('emailOrPhone').value;
+          const recoveryMethod = document.querySelector('input[name="recoveryMethod"]:checked').value;
+
+          let message = '';
+          if (recoveryMethod === 'email') {
+              message = `Um email foi enviado para ${emailOrPhone} com instruções para redefinir sua senha.`;
+          } else {
+              message = `Um SMS foi enviado para ${emailOrPhone} com instruções para redefinir sua senha.`;
           }
-      
-          function diminuirFonte() {
-            let corpo = document.querySelector('body');
-            let tamanhoAtual = window.getComputedStyle(corpo).fontSize;
-            let novoTamanho = parseFloat(tamanhoAtual) - 2; // Diminui o tamanho em 2px
-            corpo.style.fontSize = novoTamanho + 'px';
-          }
-        </script>
-    </head>
-      
-    <body>
-      <header>
-        <span id="topo"></span>
-        <div class="logo-container">
-            <img src="../Imagens/MeAjudaNovo.jpg" alt="Logo">
-        </div>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="../HTML/Home.html">Me Ajude!</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
-                    aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarScroll">
-                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                        <!--<li class="nav-item"><a class="nav-link" href="Doacao.html">Doações</a></li>-->
-                        <li class="nav-item"><a class="nav-link" href="../HTML/fiquePorDentro.html">Fique Por Dentro</a></li>
-                        <li class="nav-item"><a class="nav-link" href="campanhas.html">Campanhas</a></li>
-                        <li class="nav-item"><a class="nav-link" href="sobreNos.html">Sobre Nós</a></li>
-                        <!--<li class="nav-item"><a class="nav-link" href="../HTML/entrar.html">Entrar</a></li>-->
-                    </ul>
-                    <form class="d-flex me-3">
-                        <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search">
-                        <button class="btn btn-secondary" type="submit">Pesquisar</button>
-                    </form>
-                    <select id="languageSwitcher" class="form-select mx-2">
-                        <option value="pt">Português</option>
-                        <option value="en">English</option>
-                        <option value="es">Español</option>
-                    </select>
-                    <div class="d-flex">
-                        <button onclick="diminuirFonte();" class="btn btn-secondary me-2">A-</button>
-                        <button onclick="aumentarFonte();" class="btn btn-secondary">A+</button>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-
-    <div class="recovery-container">
-      <form action="../PHP/processarCadastro.php" method="POST"> 
-      <center><h2>Recuperar Senha</h2></center>
-        <form id="recoveryForm">
-            <div class="mb-3">
-                <label for="emailOrPhone" class="form-label">Insira seu email ou número de telefone:</label>
-                <input type="text" id="emailOrPhone" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Escolha o método de recuperação:</label><br>
-                <div class="form-check">
-                    <input type="radio" id="emailOption" name="recoveryMethod" value="email" class="form-check-input" checked>
-                    <label for="emailOption" class="form-check-label">Email</label>
-                </div>
-                <div class="form-check">
-                    <input type="radio" id="smsOption" name="recoveryMethod" value="sms" class="form-check-input">
-                    <label for="smsOption" class="form-check-label">SMS</label>
-                </div>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Entrar</button>
-            <button type="reset" class="btn btn-secondary">Limpar</button>
-            <button type="button" class="btn btn-secondary" onclick="history.back()">Voltar</button>
-            
-        </form>
-        <div id="confirmationMessage" class="confirmation" style="display: none;"></div>
+          document.getElementById('confirmationMessage').textContent = message;
+          document.getElementById('confirmationMessage').style.display = 'block';
+      });
+    }
+    </script>
+</head>
+  
+<body>
+  <header>
+    <span id="topo"></span>
+    <div class="logo-container">
+        <img src="../Imagens/MeAjudaNovo.jpg" alt="Logo">
     </div>
 
-    <aside>
-      <a href="#topo" class="back-to-top">
-        <img src="../Imagens/iconeSeta.jpg" alt="Voltar ao topo"> <!-- Substitua pelo caminho da sua imagem -->
-      </a>
-    </aside>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../HTML/Home.html">Me Ajude!</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <li class="nav-item"><a class="nav-link" href="../HTML/fiquePorDentro.html">Fique Por Dentro</a></li>
+                    <li class="nav-item"><a class="nav-link" href="campanhas.html">Campanhas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="sobreNos.html">Sobre Nós</a></li>
+                </ul>
+                <form class="d-flex me-3">
+                    <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search">
+                    <button class="btn btn-secondary" type="submit">Pesquisar</button>
+                </form>
+                <select id="languageSwitcher" class="form-select mx-2">
+                    <option value="pt">Português</option>
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                </select>
+                <div class="d-flex">
+                    <button onclick="diminuirFonte();" class="btn btn-secondary me-2">A-</button>
+                    <button onclick="aumentarFonte();" class="btn btn-secondary">A+</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="recovery-container">
+  <form action="../PHP/processarCadastro.php" method="POST" id="recoveryForm"> 
+    <center><h2>Recuperar Senha</h2></center>
+    <div class="mb-3">
+        <label for="emailOrPhone" class="form-label">Insira seu email ou número de telefone:</label>
+        <input type="text" id="emailOrPhone" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Escolha o método de recuperação:</label><br>
+        <div class="form-check">
+            <input type="radio" id="emailOption" name="recoveryMethod" value="email" class="form-check-input" checked>
+            <label for="emailOption" class="form-check-label">Email</label>
+        </div>
+        <div class="form-check">
+            <input type="radio" id="smsOption" name="recoveryMethod" value="sms" class="form-check-input">
+            <label for="smsOption" class="form-check-label">Telefone</label>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" onclick="email()">Enviar</button>
+    <button type="reset" class="btn btn-secondary">Limpar</button>
+    <button type="button" class="btn btn-secondary" onclick="history.back()">Voltar</button>
+    
+  </form>
+  <div id="confirmationMessage" class="confirmation" style="display: none;"></div>
+</div>
+
+  <aside>
+    <a href="#topo" class="back-to-top">
+     <img src="../Imagens/iconeSeta.jpg" alt="Voltar ao topo"> <!-- Substitua pelo caminho da sua imagem -->
+    </a>
+  </aside>
 
     <!-- Código do Rodapé -->
     <footer class="text-center text-lg-start bg-body-tertiary text-muted">
@@ -122,7 +132,7 @@
                 "Juntos, podemos transformar vidas e construir um futuro melhor. Participe e faça a diferença hoje!"
               </p>
             </div>
-                     <!-- Grid column -->
+             <!-- Grid column -->
             <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
               <!-- Links -->
               <h6 class="text-uppercase fw-bold mb-4">
@@ -148,17 +158,11 @@
                 Doações / Nossa localização
               </h6>
               <p>
-                <a href="../HTML/Doacao.html" class="text-reset">Como doar</a>
+                <a href="../HTML/comoDoar.html" class="text-reset">Como doar</a>
               </p>
               <p>
-                <a href="../HTML/nossaLocalização.html" class="text-reset">Nosso Local</a>
+                <a href="../HTML/nossaLocalizacao.html" class="text-reset">Nosso Local</a>
               </p>
-              <!--<p>
-                <a href="#!" class="text-reset">Orders</a>
-              </p>
-              <p>
-                <a href="#!" class="text-reset">Help</a>
-              </p>-->
             </div>
                 <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                   <!-- Links -->
@@ -218,23 +222,8 @@
       <script src=”https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js”></script>
       <script src="script.js"></script>
   
-      <script>
-        document.getElementById('recoveryForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const emailOrPhone = document.getElementById('emailOrPhone').value;
-            const recoveryMethod = document.querySelector('input[name="recoveryMethod"]:checked').value;
-
-            let message = '';
-            if (recoveryMethod === 'email') {
-                message = `Um email foi enviado para ${emailOrPhone} com instruções para redefinir sua senha.`;
-            } else {
-                message = `Um SMS foi enviado para ${emailOrPhone} com instruções para redefinir sua senha.`;
-            }
-
-            document.getElementById('confirmationMessage').textContent = message;
-            document.getElementById('confirmationMessage').style.display = 'block';
-        });
-      </script>
-
+   
   </body>
 </html>
+
+
