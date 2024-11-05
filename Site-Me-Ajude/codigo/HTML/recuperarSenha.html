@@ -80,44 +80,58 @@
     </nav>
 </header>
 
-<div class="recovery-container">
+<<div class="recovery-container">
   <form action="../PHP/processarCadastro.php" method="POST" id="recoveryForm"> 
-    <center><h2>Recuperar Senha</h2></center>
-    <div class="mb-3">
-        <label for="emailOrPhone" class="form-label">Insira seu email ou número de telefone:</label>
-        <input type="text" id="emailOrPhone" class="form-control" required>
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Escolha o método de recuperação:</label><br>
-        <div class="form-check">
-            <input type="radio" id="emailOption" name="recoveryMethod" value="email" class="form-check-input" checked>
-            <label for="emailOption" class="form-check-label">Email</label>
-        </div>
-        <div class="form-check">
-            <input type="radio" id="smsOption" name="recoveryMethod" value="sms" class="form-check-input">
-            <label for="smsOption" class="form-check-label">Telefone</label>
-        </div>
-    </div>
+      <center><h2>Recuperar Senha</h2></center>
+      <div class="mb-3">
+          <label for="emailOrPhone" class="form-label">Insira seu email ou número de telefone:</label>
+          <input type="text" id="emailOrPhone" name="emailOrPhone" class="form-control" required>
+      </div>
+      <div class="mb-3">
+          <label class="form-label">Escolha o método de recuperação:</label><br>
+          <div class="form-check">
+              <input type="radio" id="emailOption" name="recoveryMethod" value="email" class="form-check-input" checked>
+              <label for="emailOption" class="form-check-label">Email</label>
+          </div>
+          <div class="form-check">
+              <input type="radio" id="smsOption" name="recoveryMethod" value="sms" class="form-check-input">
+              <label for="smsOption" class="form-check-label">Telefone</label>
+          </div>
+      </div>
 
-    <button type="submit" class="btn btn-primary" onclick="email()">Enviar</button>
-    <button type="reset" class="btn btn-secondary">Limpar</button>
-    <button type="button" class="btn btn-secondary" onclick="history.back()">Voltar</button>
-    
+      <button type="submit" class="btn btn-primary">Enviar</button>
+      <button type="reset" class="btn btn-secondary">Limpar</button>
+      <button type="button" class="btn btn-secondary" onclick="goBack()">Voltar</button>
   </form>
   <div id="confirmationMessage" class="confirmation" style="display: none;"></div>
 </div>
 
-  <aside>
-    <a href="#topo" class="back-to-top">
-     <img src="../Imagens/iconeSeta.jpg" alt="Voltar ao topo"> <!-- Substitua pelo caminho da sua imagem -->
-    </a>
-  </aside>
+<aside>
+  <a href="#topo" class="back-to-top" onclick="scrollToTop(event)">
+      <img src="../Imagens/iconeSeta.jpg" alt="Voltar ao topo"> <!-- Substitua pelo caminho da sua imagem -->
+  </a>
+</aside>
 
-    <!-- Código do Rodapé -->
-    <footer class="text-center text-lg-start bg-body-tertiary text-muted">
-      <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"></section>
-      
-      <!-- Section: Links  -->
+<script>
+  let lastScrollPosition = 0;
+
+  function scrollToTop(event) {
+      event.preventDefault(); // Previne o comportamento padrão do link
+      lastScrollPosition = window.scrollY; // Armazena a posição atual da rolagem
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function goBack() {
+      window.history.back();
+      window.scrollTo(0, lastScrollPosition); // Retorna à posição anterior após voltar
+  }
+</script>
+
+<!-- Código do Rodapé -->
+<footer class="text-center text-lg-start bg-body-tertiary text-muted">
+  <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"></section>
+    
+   <!-- Section: Links  -->
       <section class="">
         <div class="container text-center text-md-start mt-5">
           <!-- Grid row -->

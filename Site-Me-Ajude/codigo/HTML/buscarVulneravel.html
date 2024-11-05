@@ -94,7 +94,7 @@
         <!-- Botões de navegação e ações -->
         <button type="button" class="btn btn-primary" onclick="buscarVulneravel('nome')">Buscar</button>
         <button type="reset" class="btn btn-secondary">Limpar</button>
-        <button type="button" class="btn btn-secondary" onclick="history.back()">Voltar</button>
+        <button type="button" class="btn btn-secondary" onclick="goBack()">Voltar</button>  
         
         <!-- Botões para navegar entre vulneráveis -->
         <div class="mt-4 text-center">
@@ -104,12 +104,27 @@
     </form>
   </main>
 
-  <!--Volrtar ao topo-->
+  <!-- O cóidigo do botão para voltar para o topo-->
   <aside>
-    <a href="#topo" class="back-to-top">
-      <img src="../Imagens/iconeSeta.jpg" alt="Voltar ao topo"> <!-- Substitua pelo caminho da sua imagem -->
+    <a href="#topo" class="back-to-top" onclick="scrollToTop(event)">
+        <img src="../Imagens/iconeSeta.jpg" alt="Voltar ao topo"> <!-- Substitua pelo caminho da sua imagem -->
     </a>
   </aside>
+  
+  <script>
+    let lastScrollPosition = 0;
+  
+    function scrollToTop(event) {
+        event.preventDefault(); // Previne o comportamento padrão do link
+        lastScrollPosition = window.scrollY; // Armazena a posição atual da rolagem
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  
+    function goBack() {
+        window.history.back();
+        window.scrollTo(0, lastScrollPosition); // Retorna à posição anterior após voltar
+    }
+  </script>
 
   <!-- Código do Rodapé -->
   <footer class="text-center text-lg-start bg-body-tertiary text-muted">

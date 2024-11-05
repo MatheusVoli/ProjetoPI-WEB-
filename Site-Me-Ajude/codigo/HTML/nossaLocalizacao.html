@@ -77,13 +77,30 @@
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d110102.79710973818!2d-51.2440039026783!3d-30.03157055203001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95199cd191b40e1f%3A0xb1b78e8bb47696f!2sPorto%20Alegre%2C%20RS!5e0!3m2!1spt-BR!2sbr!4v1696354211793!5m2!1spt-BR!2sbr"
        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
-   </section></center>
+   </section></center><br>
 
-    <aside>
-     <a href="#topo" class="back-to-top">
-       <img src="../Imagens/iconeSeta.jpg" alt="Voltar ao topo"> 
+   <center><button type="button" class="btn btn-secondary" onclick="goBack()">Voltar</button></center>
+  
+   <aside>
+     <a href="#topo" class="back-to-top" onclick="scrollToTop(event)">
+         <img src="../Imagens/iconeSeta.jpg" alt="Voltar ao topo"> <!-- Substitua pelo caminho da sua imagem -->
      </a>
-    </aside>
+   </aside>
+   
+   <script>
+     let lastScrollPosition = 0;
+   
+     function scrollToTop(event) {
+         event.preventDefault(); // Previne o comportamento padrão do link
+         lastScrollPosition = window.scrollY; // Armazena a posição atual da rolagem
+         window.scrollTo({ top: 0, behavior: 'smooth' });
+     }
+   
+     function goBack() {
+         window.history.back();
+         window.scrollTo(0, lastScrollPosition); // Retorna à posição anterior após voltar
+     }
+   </script>
       
     <!-- Código do Rodapé -->
     <footer class="text-center text-lg-start bg-body-tertiary text-muted">

@@ -140,14 +140,28 @@
   </main>
   <br><br><br>
 
-  <center><button type="button" class="btn btn-secondary" onclick="history.back()">Voltar</button> </center>
+  <center><button type="button" class="btn btn-secondary" onclick="goBack()">Voltar</button></center>
   
-  <!-- O cóidigo do botão para voltar para o topo-->
   <aside>
-    <a href="#topo" class="back-to-top">
-      <img src="../Imagens/iconeSeta.jpg" alt="Voltar ao topo"> <!-- Substitua pelo caminho da sua imagem -->
+    <a href="#topo" class="back-to-top" onclick="scrollToTop(event)">
+        <img src="../Imagens/iconeSeta.jpg" alt="Voltar ao topo"> <!-- Substitua pelo caminho da sua imagem -->
     </a>
-  </aside>  
+  </aside>
+  
+  <script>
+    let lastScrollPosition = 0;
+  
+    function scrollToTop(event) {
+        event.preventDefault(); // Previne o comportamento padrão do link
+        lastScrollPosition = window.scrollY; // Armazena a posição atual da rolagem
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  
+    function goBack() {
+        window.history.back();
+        window.scrollTo(0, lastScrollPosition); // Retorna à posição anterior após voltar
+    }
+  </script>
 
   <!-- O cóidigo abaixo do footer-->
   <footer class="text-center text-lg-start bg-body-tertiary text-muted"></footer>
