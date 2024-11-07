@@ -251,10 +251,11 @@ p:hover {
   }
   
   .share-icon {
-    width: 24px;
-    height: 24px;
-  }
-  
+    width: 40px !important;  /* Adicionando !important para forçar o estilo */
+    height: 40px !important; /* Adicionando !important para forçar o estilo */
+}
+
+
   /*=====================================================================================================*/
   /*Itens para mexer na imagem na página o que fazemos*/
  
