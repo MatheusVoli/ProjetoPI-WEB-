@@ -238,7 +238,7 @@ p:hover {
 .share-buttons {
     margin-top: 10px;
     display: flex;
-    align-items: center;
+    align-items: left;
   }
   
   .share-buttons span {
@@ -248,13 +248,14 @@ p:hover {
   
   .share-buttons a {
     margin-left: 5px;
-  }
+ }
   
   .share-icon {
     width: 40px !important;  /* Adicionando !important para forçar o estilo */
     height: 40px !important; /* Adicionando !important para forçar o estilo */
-}
+  }
 
+  
 
   /*=====================================================================================================*/
   /*Itens para mexer na imagem na página o que fazemos*/
@@ -428,9 +429,10 @@ h2{
     color: #0b1e7c;
 }
 /*==============================================================================================================================*/
+/*Ajustar imagem do meajude */
 .logo-container img {
     width: 100%;
-    height: 300px; /* Define uma altura fixa */
+    height: 500px; /* Define uma altura fixa */
     object-fit: cover; /* Faz a imagem se ajustar e cortar se necessário */
   }
  
