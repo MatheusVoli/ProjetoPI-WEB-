@@ -60,8 +60,12 @@
       </div>
 
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <div class="container-fluid">
-              <a class="navbar-brand" href="../HTML/Home.html">Me Ajude!</a>
+        <div class="container-fluid">
+            <!-- Navbar com uma imagem -->
+            <a class="navbar-brand" href="../HTML/Home.html">
+                <!-- Imagem adicionada -->
+                <img src="../Imagens/imgMeAjude.jpg" alt="Logo" style="height: 40px; margin-right: 10px;">
+              </a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
                   aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
@@ -93,12 +97,24 @@
   </header>
   </header>
 
-     <main class="container my-5">
-      <center>
-        <h1>Bem-vindo ao Me Ajude!</h1>
-        <h3>Aqui você pode gerenciar suas ações e doações.</h3>
-      </center>
-  
+  <!-- Página principal onde o nome do usuário será exibido -->
+    <center>
+      <h1>Bem-vindo, <span id="user-name"></span> ao Me Ajude!</h1>
+      <h3>Aqui você pode gerenciar suas ações e doações.</h3>
+    </center>
+
+    <script>
+      // Obtém o nome do usuário do localStorage
+      const nomeUsuario = localStorage.getItem('nomeUsuario');
+      
+      // Se o nome do usuário for encontrado, insira-o na página
+      if (nomeUsuario) {
+        document.getElementById('user-name').textContent = nomeUsuario;
+      } else {
+        document.getElementById('user-name').textContent = 'Visitante'; // Caso o usuário não esteja logado
+      }
+    </script>
+
       <!-- Layout de Blocos com descrições -->
       <div class="row mt-5">
         <div class="col-md-4">
